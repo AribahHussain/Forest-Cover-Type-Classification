@@ -1,0 +1,90 @@
+🌲 Forest Cover Type Classification – Project Report
+📌 Objective
+The primary goal of this project was to build a machine learning model capable of predicting the forest cover type based on cartographic and environmental features using the UCI Covertype dataset. The problem is a multi-class classification task involving seven cover type classes.
+
+📁 Dataset Overview
+Source: UCI Machine Learning Repository
+
+Instances: ~581,000 rows
+
+Features: 54 numerical and binary features
+
+Target: Cover_Type (7 classes representing forest types)
+
+🧹 Data Preprocessing
+To handle the large volume of data efficiently, several preprocessing steps were applied:
+
+Type Optimization:
+
+Converted categorical/binary columns to uint8
+
+Converted continuous features to float32
+This significantly reduced memory usage and improved training speed.
+
+Sampling:
+
+30% of the dataset was used for training and tuning to speed up experimentation without heavily compromising accuracy.
+
+Train-Test Split:
+
+The dataset was split into training (70%) and test (30%) sets.
+
+An additional 20% subset from the training set was used exclusively for hyperparameter tuning.
+
+🌲 Model Selection
+The primary model used was a Random Forest Classifier, chosen for its robustness in handling structured/tabular data and ability to manage multi-class problems.
+
+🔧 Hyperparameter Tuning with RandomizedSearchCV
+Instead of traditional GridSearchCV (which is computationally expensive for large datasets), RandomizedSearchCV was used to explore the hyperparameter space more efficiently:
+
+Parameters searched:
+
+n_estimators: [50, 100, 150]
+
+max_depth: [10, 20, 30, None]
+
+max_features: ["sqrt", "log2", None]
+
+Search configuration:
+
+n_iter: 5
+
+cv: 2-fold cross-validation
+
+scoring: accuracy
+
+n_jobs=-1: leveraged all CPU cores for faster execution
+
+This setup drastically reduced training time while still identifying high-performing hyperparameters.
+
+✅ Model Performance
+After tuning, the best Random Forest model was evaluated:
+
+Best Parameters:
+
+Returned by random_search.best_params_
+
+Accuracy:
+
+Accuracy was measured on the test set to assess generalization
+
+Classification Report & Confusion Matrix:
+
+Provided further insight into class-level precision, recall, and F1-score
+
+📊 Results Visualization
+Confusion Matrix: Showed class-wise prediction strengths and misclassifications
+
+Feature Importance (Optional Step): Can be used to interpret which features impact predictions the most
+
+⚡ Optimization Highlights
+Reduced memory usage with smart data type casting
+
+Used only 30% of the dataset for training/tuning to save time
+
+Avoided expensive grid search using RandomizedSearchCV
+
+Leveraged parallel processing via n_jobs=-1
+
+📌 Conclusion
+This project successfully built a scalable and efficient Random Forest model to classify forest cover types. By integrating sampling, memory optimization, and randomized hyperparameter search, the process was streamlined to run efficiently even on constrained hardware. The chosen methods are effective for similar large-scale multi-class classification tasks and can be expanded further using models like XGBoost for comparison.
